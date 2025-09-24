@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches:
+        - '**'
+
+jobs:
+  native-build:
+    name: 'Native build'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+      with:
+        submodules: true
+    - name: Build Pino
+      run: |
+        bash './main.sh' 'build'
+    - name: Generate tarball
+      run: |
+        declare tarball_filename='/tmp/x86_64-unknown-linux-gnu.tar.xz'
+        tar --directory='/tmp' --create --file=- 'darwin' | xz --threads='0' --compress -9 > "${tarball_filename}"
+        sha256sum "${tarball_filename}" | sed 's|/tmp/||' > "${tarball_filename}.sha256"
+    - name: Create release
+      uses: softprops/action-gh-release@master
+      with:
+        tag_name: 0.1
+        name: OSXCross
+        files: /tmp/*-unknown-*.tar.xz*
+        draft: false
+        prerelease: false
+        fail_on_unmatched_files: true
+        body: "* Initial release"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

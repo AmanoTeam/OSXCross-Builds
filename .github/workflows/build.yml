@@ -13,42 +13,20 @@ jobs:
     - uses: actions/checkout@main
       with:
         submodules: true
-    - name: Free up some space
-      run: |
-        curl 'https://raw.githubusercontent.com/AmanoTeam/gha-free-space/refs/heads/master/main.sh' -sSf | bash 
-    - name: Check for cache
-      id: check-cache
-      uses: actions/cache@main
-      with:
-        key:  osxcross
-        lookup-only: true
-        path: |
-          /tmp/x86_64-unknown-linux-gnu.tar.xz
-          /tmp/x86_64-unknown-linux-gnu.tar.xz.sha256
     - name: Build Pino
-      if: ${{ steps.check-cache.outputs.cache-hit != 'true' }}
       run: |
         bash './main.sh' 'build'
     - name: Generate tarball
-      if: ${{ steps.check-cache.outputs.cache-hit != 'true' }}
       run: |
         declare tarball_filename='/tmp/x86_64-unknown-linux-gnu.tar.xz'
         tar --directory='/tmp' --create --file=- 'darwin' | xz --threads='0' --compress -9 > "${tarball_filename}"
         sha256sum "${tarball_filename}" | sed 's|/tmp/||' > "${tarball_filename}.sha256"
-    - name: Cache artifact
-      if: ${{ steps.check-cache.outputs.cache-hit != 'true' }}
-      uses: actions/cache@main
-      with:
-        key:  osxcross
-        path: |
-          /tmp/x86_64-unknown-linux-gnu.tar.xz
-          /tmp/x86_64-unknown-linux-gnu.tar.xz.sha256
     - name: Create release
       uses: softprops/action-gh-release@master
       with:
         tag_name: 0.1
         name: OSXCross
-        files: ./*/*-unknown-*.tar.xz*
+        files: /tmp/*-unknown-*.tar.xz*
         draft: false
         prerelease: false
         fail_on_unmatched_files: true

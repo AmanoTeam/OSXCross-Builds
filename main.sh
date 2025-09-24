@@ -2,6 +2,8 @@
 
 set -eu
 
+declare -r workdir="${PWD}"
+
 declare -r toolchain_directory='/tmp/darwin'
 declare -r share_directory="${toolchain_directory}/usr/local/share/darwin"
 

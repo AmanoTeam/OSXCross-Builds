@@ -15,6 +15,7 @@ set(CMAKE_AR "/usr/bin/llvm-ar" CACHE FILEPATH "ar")
 set(CMAKE_RANLIB "/usr/bin/llvm-ranlib" CACHE FILEPATH "ranlib")
 set(CMAKE_STRIP "/usr/bin/llvm-strip" CACHE FILEPATH "strip")
 set(CMAKE_OBJCOPY "/usr/bin/llvm-objcopy" CACHE FILEPATH "objcopy")
+set(CMAKE_OBJDUMP "/usr/bin/llvm-objdump" CACHE FILEPATH "objdump")
 set(CMAKE_NM "/usr/bin/llvm-nm" CACHE FILEPATH "nm")
 
 set(CMAKE_FIND_ROOT_PATH "${TOOLCHAIN_PATH}/SDK/MacOSX11.3.sdk" CACHE FILEPATH "sysroot")

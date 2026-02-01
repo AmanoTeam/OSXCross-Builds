@@ -9,6 +9,8 @@ CROSS_COMPILE_SYSTEM='darwin'
 CROSS_COMPILE_ARCHITECTURE='x86_64'
 CROSS_COMPILE_SYSROOT='/tmp/darwin/SDK/MacOSX11.3.sdk'
 
+CMAKE_TOOLCHAIN_FILE='/tmp/darwin/build/cmake/x86_64h-unknown-apple-darwin.cmake'
+
 CC='/tmp/darwin/bin/x86_64h-apple-darwin20.4-clang'
 CXX='/tmp/darwin/bin/x86_64h-apple-darwin20.4-clang++'
 AR='/usr/bin/llvm-ar'
@@ -18,13 +20,17 @@ NM='/usr/bin/llvm-nm'
 RANLIB='/usr/bin/llvm-ranlib'
 STRIP='/usr/bin/llvm-strip'
 OBJCOPY='/usr/bin/llvm-objcopy'
+OBJDUMP='/usr/bin/llvm-objdump'
 READELF='/usr/bin/llvm-readelf'
+
+MACOSX_DEPLOYMENT_TARGET='11.3'
 
 export \
 	CROSS_COMPILE_TRIPLET \
 	CROSS_COMPILE_SYSTEM \
 	CROSS_COMPILE_ARCHITECTURE \
 	CROSS_COMPILE_SYSROOT \
+	CMAKE_TOOLCHAIN_FILE \
 	CC \
 	CXX \
 	AR \
@@ -34,7 +40,9 @@ export \
 	RANLIB \
 	STRIP \
 	OBJCOPY \
-	READELF
+	OBJDUMP \
+	READELF \
+	MACOSX_DEPLOYMENT_TARGET
 
 [[ "${kopt}" = *e*  ]] || set +e
 [[ "${kopt}" = *u*  ]] || set +u

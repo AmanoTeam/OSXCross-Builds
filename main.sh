@@ -23,10 +23,10 @@ sudo \
 cd '/tmp'
 
 wget 'https://apt.llvm.org/llvm.sh'
-sudo bash './llvm.sh' '22'
+sudo bash './llvm.sh' '21'
 
-for old in '/usr/bin/'*'-22'; do
-	declare new="$(sed 's/-22//g' <<< "${old}")"
+for old in '/usr/bin/'*'-21'; do
+	declare new="$(sed 's/-21//g' <<< "${old}")"
 	sudo unlink "${new}" 2>/dev/null || true
 	sudo ln --symbolic "${old}" "${new}"
 done
